@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/11 13:11:47 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/11 13:25:24 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	main(void)
 {
-	ft_printf("Server executed (ft_printf).\n");
+	int	pid;
+
+	pid = getpid();
+	ft_printf("Server started with PID: %d.\n", pid);
 	return (0);
 }
