@@ -6,14 +6,14 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/11 13:01:25 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/11 13:11:44 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "minitalk.h"
 
 int	main(void)
 {
-	printf("Client executed.\n");
+	ft_printf("Client executed (ft_printf).\n");
 	return (0);
 }
