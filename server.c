@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/11 18:24:17 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/11 20:05:18 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,3 @@ int	main(void)
 		;
 	return (0);
 }
-
-/*
-void    get_pid(int sig, siginfo_t *info, void *context)
-{
-    signalPid = info->si_pid;
-}
-
-int main(int argc, char **argv)
-{
-    struct sigaction        sa;
-
-    printf("PID: %d\n", getpid());       //display PID for kill()
-    sa.sa_flags = SA_SIGINFO;
-    sa.sa_sigaction = get_pid;
-    sigaction(SIGUSR1, &sa, NULL);
-    pause();                           //wait for a signal
-    printf("PID of signal sender = %d\n", signalPid);
-}
-*/
