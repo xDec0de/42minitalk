@@ -6,26 +6,32 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/11 20:05:18 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:51:06 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	test_handler(int signum, siginfo_t *info, void *context)
+static void	signal_handler(int signum)
 {
-	context = NULL;
+	static int	bit_count = 0;
+	static char	ch = 0;
+
 	if (signum == SIGUSR1)
-		ft_printf("Received SIGUSR1 from client %d\n", info->si_pid);
+		ch = ch | 128 >> bit_count;
+	bit_count++;
+	if (bit_count == 8)
+	{
+		ft_printf("%c", ch);
+		bit_count = 0;
+		ch = 0;
+	}
 }
 
 int	main(void)
 {
-	struct sigaction	sa;
-
-	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = test_handler;
-	sigaction(SIGUSR1, &sa, NULL);
+	signal(SIGUSR1, signal_handler);
+	signal(SIGUSR2, signal_handler);
 	ft_printf("Server started with PID: %d.\n", getpid());
 	while (1)
 		;
