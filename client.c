@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/14 16:27:35 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/14 17:11:09 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	client_stop(int ext_code)
 		ft_printf(IN_ERR_STR);
 	else if (ext_code == PID_ERR)
 		ft_printf(PID_ERR_STR);
+	else if (ext_code == SIG_SEND_ERR)
+		ft_printf(SIG_SEND_ERR_STR);
 	exit(ext_code);
 }
 
@@ -61,6 +63,12 @@ int	check_input(int argc, char **args)
 	return (pid);
 }
 
+void	send_signal(int pid, int signal)
+{
+	if (kill(pid, signal) != 0)
+		client_stop(SIG_SEND_ERR);
+}
+
 // ./client [int:PID] [char*:message]
 int	main(int argc, char **args)
 {
@@ -79,9 +87,9 @@ int	main(int argc, char **args)
 		while (j >= 0)
 		{
 			if (ch >> j & 1)
-				kill(pid, SIGUSR1);
+				send_signal(pid, SIGUSR1);
 			else
-				kill(pid, SIGUSR2);
+				send_signal(pid, SIGUSR2);
 			j--;
 			usleep(300);
 		}
