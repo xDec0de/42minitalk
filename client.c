@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/12 15:58:15 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/14 16:18:40 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,15 @@ int	main(int argc, char **args)
 	{
 		ch = args[2][i];
 		j = 7;
-		ft_printf("Client send: ");
 		while (j >= 0)
 		{
-			if (ch >> j & 1) {
-				ft_printf("1");
+			if (ch >> j & 1)
 				kill(pid, SIGUSR1);
-			} else {
-				ft_printf("0");
+			else
 				kill(pid, SIGUSR2);
-			}
 			j--;
-			usleep(10);
+			usleep(300);
 		}
-		ft_printf("\n");
 		i++;
 	}
 	return (0);
