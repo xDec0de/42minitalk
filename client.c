@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/14 17:11:09 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/15 20:10:18 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,24 @@ int	check_input(int argc, char **args)
 	return (pid);
 }
 
-void	send_signal(int pid, int signal)
+int	send_char(char ch, int pid)
 {
-	if (kill(pid, signal) != 0)
-		client_stop(SIG_SEND_ERR);
+	int	j;
+
+	j = 7;
+	while (j >= 0)
+	{
+		if (ch >> j & 1)
+		{
+			if (kill(pid, SIGUSR1) != 0)
+				client_stop(SIG_SEND_ERR);
+		}
+		else if (kill(pid, SIGUSR2) != 0)
+			client_stop(SIG_SEND_ERR);
+		j--;
+		usleep(300);
+	}
+	return (1);
 }
 
 // ./client [int:PID] [char*:message]
@@ -74,26 +88,11 @@ int	main(int argc, char **args)
 {
 	int		pid;
 	int		i;
-	int		j;
-	char	ch;
 
 	i = 0;
-	j = 0;
 	pid = check_input(argc, args);
 	while (args[2][i] != '\0')
-	{
-		ch = args[2][i];
-		j = 7;
-		while (j >= 0)
-		{
-			if (ch >> j & 1)
-				send_signal(pid, SIGUSR1);
-			else
-				send_signal(pid, SIGUSR2);
-			j--;
-			usleep(300);
-		}
-		i++;
-	}
+		i += send_char(args[2][i], pid);
+	send_char('\0', pid);
 	return (0);
 }
