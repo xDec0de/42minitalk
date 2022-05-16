@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/16 19:10:23 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:13:21 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static char	store_bit(t_client *client, int bit)
 	if (i == 8) {
 		ft_printf("Bit array is full! Clearing and returning A.\n");
 		print_bit_array(client->bits);
+		i = 0;
 		while (i <= 7)
 			client->bits[i++] = 2;
 		return ('A');
