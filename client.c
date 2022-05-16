@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/16 20:36:17 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/16 20:58:25 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	send_char(char ch, int pid)
 		else if (kill(pid, SIGUSR2) != 0)
 			client_stop(SIG_SEND_ERR);
 		j--;
-		usleep(10000);
+		usleep(300);
 	}
 	return (1);
 }
@@ -93,6 +93,5 @@ int	main(int argc, char **args)
 	pid = check_input(argc, args);
 	while (args[2][i] != '\0')
 		i += send_char(args[2][i], pid);
-	send_char('\0', pid);
 	return (0);
 }
