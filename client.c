@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/16 21:29:34 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:25:00 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	signal_handler(int signum)
 {
 	if (signum == SIGUSR1)
 		ft_printf(SRV_STR_RECEIVED);
+	else
+		ft_printf(SRV_BUSY);
 	exit (0);
 }
 
@@ -70,6 +72,7 @@ int	main(int argc, char **args)
 
 	i = 0;
 	signal(SIGUSR1, signal_handler);
+	signal(SIGUSR2, signal_handler);
 	pid = check_input(argc, args);
 	while (args[2][i] != '\0')
 		i += send_char(args[2][i], pid);

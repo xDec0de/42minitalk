@@ -6,25 +6,43 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/16 21:32:43 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:21:02 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
+int	check_pid(int pid, int incoming_pid)
+{
+	if (incoming_pid != pid)
+	{
+		kill(incoming_pid, SIGUSR2);
+		return (1);
+	}
+	return (0);
+}
+
 static void	signal_handler(int signum, siginfo_t *info, void *context)
 {
+	static int	pid = 0;
 	static int	bit_count = 0;
 	static char	ch = 0;
 
 	(void) context;
+	if (pid == 0)
+		pid = info->si_pid;
+	if (check_pid(pid, info->si_pid) == 1)
+		return ;
 	if (signum == SIGUSR1)
 		ch = ch | 128 >> bit_count;
 	bit_count++;
 	if (bit_count == 8)
 	{
 		if (ch == '\0')
-			kill(info->si_pid, SIGUSR1);
+		{
+			kill(pid, SIGUSR1);
+			pid = 0;
+		}
 		else
 			ft_printf("%c", ch);
 		bit_count = 0;
