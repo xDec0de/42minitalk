@@ -6,7 +6,7 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:45:19 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/16 18:47:28 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/16 21:07:55 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@
 
 # define MAX_CONNECTIONS 1024
 
-typedef struct s_client {
-	int	pid;
-	int	bits[8];
-	int	ended;
-}				t_client;
+# define PID_NOTIFY "\e[0;36mServer started with PID\e[1;30m:\
+ \e[1;33m%d\e[0m\n"
 
 #endif

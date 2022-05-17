@@ -6,7 +6,7 @@
 #    By: danimart <danimart@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 10:19:42 by danimart          #+#    #+#              #
-#    Updated: 2022/05/14 16:29:00 by danimart         ###   ########.fr        #
+#    Updated: 2022/05/16 21:33:11 by danimart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ COMO_FILES=$(COMC_FILES:.c=.o)
 SC_FILES=server.c
 SO_FILES=$(SC_FILES:.c=.o)
 
-CC_FILES=client.c
+CC_FILES=client.c client_utils.c
 CO_FILES=$(CC_FILES:.c=.o)
 
 all: $(NAME)

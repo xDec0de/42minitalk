@@ -6,93 +6,48 @@
 /*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/16 20:30:44 by danimart         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:21:02 by danimart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-char	bit_array_to_char(int arr[])
+int	check_pid(int pid, int incoming_pid)
 {
-	int		i;
-	char	ch;
-
-	ch = 0;
-	i = 0;
-	while (i < 8)
+	if (incoming_pid != pid)
 	{
-		if (arr[i] == 1)
-			ch = ch | 128 >> i;
-		i++;
+		kill(incoming_pid, SIGUSR2);
+		return (1);
 	}
-	return (ch);
-}
-
-t_client	*get_client(int pid)
-{
-	static int		last_client_id;
-	static t_client	clients[MAX_CONNECTIONS];
-	t_client		client;
-	int				i;
-
-	i = 0;
-	while (i < last_client_id)
-	{
-		if (clients[i].pid == pid)
-			return (&clients[i]);
-		i++;
-	}
-	i = 0;
-	client.pid = pid;
-	while (i <= 7)
-		client.bits[i++] = 2;
-	client.ended = 0;
-	clients[last_client_id] = client;
-	last_client_id++;
-	return (&clients[last_client_id - 1]);
-}
-
-static char	store_bit(t_client *client, int bit)
-{
-	int		i;
-	char	ch;
-
-	i = 0;
-	while (i < 8)
-	{
-		if (client->bits[i] == 2)
-			break ;
-		i++;
-	}
-	if (i == 8)
-	{
-		i = 0;
-		ch = bit_array_to_char(client->bits);
-		while (i <= 7)
-			client->bits[i++] = 2;
-		client->bits[0] = bit;
-		return (ch);
-	}
-	else
-		client->bits[i] = bit;
-	return ('\0');
+	return (0);
 }
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
 {
-	char			ch;
-	int				pid;
-	t_client		*client;
+	static int	pid = 0;
+	static int	bit_count = 0;
+	static char	ch = 0;
 
 	(void) context;
-	pid = info->si_pid;
-	client = get_client(pid);
+	if (pid == 0)
+		pid = info->si_pid;
+	if (check_pid(pid, info->si_pid) == 1)
+		return ;
 	if (signum == SIGUSR1)
-		ch = store_bit(client, 1);
-	else
-		ch = store_bit(client, 0);
-	if (ch != '\0')
-		ft_printf("%c", ch);
+		ch = ch | 128 >> bit_count;
+	bit_count++;
+	if (bit_count == 8)
+	{
+		if (ch == '\0')
+		{
+			kill(pid, SIGUSR1);
+			pid = 0;
+		}
+		else
+			ft_printf("%c", ch);
+		bit_count = 0;
+		ch = 0;
+	}
 }
 
 int	main(void)
@@ -103,7 +58,7 @@ int	main(void)
 	sa.sa_sigaction = signal_handler;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	ft_printf("Server started with PID: %d.\n", getpid());
+	ft_printf(PID_NOTIFY, getpid());
 	while (1)
 		;
 	return (0);
