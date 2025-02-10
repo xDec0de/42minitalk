@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/10 16:29:26 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:33:11 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 int	check_pid(int pid, int incoming_pid)
 {
-	if (incoming_pid != pid)
-	{
-		kill(incoming_pid, SIGUSR2);
-		return (1);
-	}
-	return (0);
+	if (incoming_pid == pid)
+		return (0);
+	kill(incoming_pid, SIGUSR2);
+	return (1);
 }
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
@@ -44,9 +42,9 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 			pid = 0;
 		}
 		else
-			ft_printf("%c", ch);
+			write(1, &ch, 1);
 		bit_count = 0;
-		ch = 0;
+		ch = '\0';
 	}
 }
 
