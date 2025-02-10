@@ -6,7 +6,7 @@
 #    By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 10:19:42 by daniema3          #+#    #+#              #
-#    Updated: 2025/02/10 18:20:19 by daniema3         ###   ########.fr        #
+#    Updated: 2025/02/10 18:46:05 by daniema3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,13 @@ CO_FILES = $(CC_FILES:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(SO_FILES) $(CO_FILES) $(PRINTFO_FILES)
-	$(CC) $(CFLAGS) $(PRINTFO_FILES) $(SO_FILES) -o $(SNAME)
+$(NAME): client server
+
+client: $(PRINTFO_FILES) $(CO_FILES)
 	$(CC) $(CFLAGS) $(PRINTFO_FILES) $(CO_FILES) -o $(CNAME)
+
+server: $(PRINTFO_FILES) $(SO_FILES)
+	$(CC) $(CFLAGS) $(PRINTFO_FILES) $(SO_FILES) -o $(SNAME)
 
 clean:
 	rm -rf $(PRINTFO_FILES) $(SO_FILES) $(CO_FILES)
