@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danimart <danimart@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 21:27:39 by danimart          #+#    #+#             */
-/*   Updated: 2022/05/16 21:27:47 by danimart         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:23:38 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_atoi(const char *str)
 			sign = 1;
 	while (str[i] >= '0' && str[i] <= '9')
 		res = (res * 10) + (str[i++] - '0');
-	if (res > 9223372036854775807)
+	if (res > __LONG_MAX__)
 	{
 		if (sign)
 			return (0);
