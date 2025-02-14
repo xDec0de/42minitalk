@@ -6,16 +6,18 @@
 #    By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 10:19:42 by daniema3          #+#    #+#              #
-#    Updated: 2025/02/10 18:46:05 by daniema3         ###   ########.fr        #
+#    Updated: 2025/02/14 15:05:39 by daniema3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minitalk
 SNAME = server
 CNAME = client
-CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+SIGNAL_SLEEP ?= 200
+
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra -DSIGNAL_SLEEP=$(SIGNAL_SLEEP)
 
 PRINTFC_FILES = printf/ft_printf.c printf/write_num.c printf/write_txt.c
 PRINTFO_FILES = $(PRINTFC_FILES:.c=.o)

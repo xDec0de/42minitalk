@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/10 16:28:53 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/14 14:58:09 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	send_char(char ch, int pid)
 		else if (kill(pid, SIGUSR2) != 0)
 			client_stop(SIG_SEND_ERR);
 		j--;
-		usleep(300);
+		usleep(SIGNAL_SLEEP);
 	}
 	return (1);
 }
