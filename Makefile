@@ -6,7 +6,7 @@
 #    By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 10:19:42 by daniema3          #+#    #+#              #
-#    Updated: 2025/02/14 15:05:39 by daniema3         ###   ########.fr        #
+#    Updated: 2025/02/14 15:42:18 by daniema3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minitalk
 SNAME = server
 CNAME = client
 
-SIGNAL_SLEEP ?= 200
+SIGNAL_SLEEP ?= 250
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -DSIGNAL_SLEEP=$(SIGNAL_SLEEP)
