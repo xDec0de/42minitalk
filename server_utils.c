@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:59:34 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/17 13:30:07 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:58:15 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ char	*append_ch(char *str, char ch)
 	len = 0;
 	if (str == NULL)
 	{
-		str = malloc(1 * sizeof(char));
+		str = malloc(2 * sizeof(char));
 		str[0] = ch;
-		str[0] = '\0';
+		str[1] = '\0';
 		return (str);
 	}
 	while (str[len] != '\0')
