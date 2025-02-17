@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:59:34 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/17 13:58:15 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:03:14 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ char	*expand_str(char *str)
 
 char	*append_ch(char *str, char ch)
 {
-	int	len;
+	int		len;
+	char	*expanded;
 
 	len = 0;
 	if (str == NULL)
@@ -68,6 +69,8 @@ char	*append_ch(char *str, char ch)
 	}
 	while (str[len] != '\0')
 		len++;
-	str[len] = ch;
-	return (str);
+	expanded = expand_str(str);
+	expanded[len] = ch;
+	free(str);
+	return (expanded);
 }
