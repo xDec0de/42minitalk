@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:59:34 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/17 14:03:14 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/17 19:16:28 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,6 @@ int	check_pid(int pid, int incoming_pid)
 		return (0);
 	kill(incoming_pid, SIGUSR2);
 	return (1);
-}
-
-char	*copy_str_to_str(char *src, char *dest)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }
 
 char	*expand_str(char *str)
