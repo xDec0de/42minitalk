@@ -6,18 +6,22 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/10 17:41:49 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:31:08 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-int	check_pid(int pid, int incoming_pid)
+static void	handle_char(char ch)
 {
-	if (incoming_pid == pid)
-		return (0);
-	kill(incoming_pid, SIGUSR2);
-	return (1);
+	static char	*buff = NULL;
+
+	buff = append_ch(buff, ch);
+	if (ch != '\0')
+		return ;
+	ft_printf(buff);
+	free(buff);
+	buff = NULL;
 }
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
@@ -36,13 +40,12 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 	bit_count++;
 	if (bit_count == 8)
 	{
+		handle_char(ch);
 		if (ch == '\0')
 		{
 			kill(pid, SIGUSR1);
 			pid = 0;
 		}
-		else
-			write(1, &ch, 1);
 		bit_count = 0;
 		ch = '\0';
 	}
