@@ -6,7 +6,7 @@
 #    By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 10:19:42 by daniema3          #+#    #+#              #
-#    Updated: 2025/02/17 13:11:34 by daniema3         ###   ########.fr        #
+#    Updated: 2025/02/17 18:38:17 by daniema3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CNAME = client
 SIGNAL_SLEEP ?= 250
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -DSIGNAL_SLEEP=$(SIGNAL_SLEEP)
+CFLAGS = -Wall -Werror -Wextra -g3 -DSIGNAL_SLEEP=$(SIGNAL_SLEEP)
 
 PRINTFC_FILES = printf/ft_printf.c printf/write_num.c printf/write_txt.c
 PRINTFO_FILES = $(PRINTFC_FILES:.c=.o)
