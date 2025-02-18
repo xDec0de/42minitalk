@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:16:49 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/10 17:41:29 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:44:33 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ String received and printed\e[1;30m.\e[0m\n"
 # define SRV_BUSY "\e[1;30m[\e[1;33mServer\e[1;30m] \e[0;31mAnother\
  client is using the server, please wait\e[1;30m.\e[0m\n"
 
-// client_utils.c
-int	ft_atoi(const char *str);
+int		client_stop(int ext_code);
+
+int		ft_atoi(const char *str);
+
+t_ulong	ft_strlen(char *str);
 
 #endif
