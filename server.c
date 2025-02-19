@@ -6,12 +6,11 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/19 16:09:29 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:39:09 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
-#include <stdio.h>
 
 static char	*handle_size(int signum)
 {
@@ -24,10 +23,9 @@ static char	*handle_size(int signum)
 	bit_count++;
 	if (bit_count != ULONG_BIT)
 		return (NULL);
-	printf("Allocating %lld bytes\n", size);
 	buff = malloc(size * sizeof(char));
 	if (buff == NULL)
-		return (NULL); // TODO: Stop server
+		stop_server(MALLOC_ERR);
 	return (buff);
 }
 
