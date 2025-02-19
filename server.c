@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/19 18:39:09 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:06:19 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ static char	*handle_size(int signum)
 	buff = malloc(size * sizeof(char));
 	if (buff == NULL)
 		stop_server(MALLOC_ERR);
+	buff[size] = '\0';
+	while (size > 0)
+	{
+		size--;
+		buff[size] = '\0';
+	}
 	return (buff);
 }
 
@@ -41,14 +47,14 @@ static int handle_char(int signum, int pid, char *buff)
 	if (bit_count == CHAR_BIT)
 	{
 		buff[i] = ch;
+		ft_printf("Handled char %c. i = %d, buff = %s\n", ch, i, buff);
 		i++;
 		bit_count = 0;
 		if (ch == '\0')
 		{
-			ft_printf(buff);
-			free(buff);
-			buff = NULL;
+			ft_printf("Received: %s\n", buff);
 			i = 0;
+			ch = '\0';
 			kill(pid, SIGUSR1);
 			return (0);
 		}
@@ -69,8 +75,12 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 		return ;
 	if (buff == NULL)
 		buff = handle_size(signum);
-	else if (!handle_char(signum, pid, buff))
+	else if (handle_char(signum, pid, buff) == 0)
+	{
+		free(buff);
+		buff = NULL;
 		pid = 0;
+	}
 }
 
 int	main(void)
