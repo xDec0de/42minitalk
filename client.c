@@ -6,11 +6,12 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/18 17:49:58 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:13:03 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
+#include <stdio.h>
 
 int	check_input(int argc, char **args)
 {
@@ -28,7 +29,7 @@ int	send_char(char ch, int pid)
 {
 	int	bit;
 
-	bit = 7;
+	bit = CHAR_BIT - 1;
 	while (bit >= 0)
 	{
 		if (ch >> bit & 1)
@@ -48,7 +49,8 @@ void	send_size(t_ulong size, int pid)
 {
 	int	bit;
 
-	bit = sizeof(t_ulong);
+	printf("Sending size %lld to server\n", size);
+	bit = ULONG_BIT - 1;
 	while (bit >= 0)
 	{
 		if (size >> bit & 1)
