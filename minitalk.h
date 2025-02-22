@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:04:32 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 18:57:00 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:36:38 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # include "printf/ft_printf.h"
 # include <signal.h>
 # include <limits.h>
-
-# ifndef SIGNAL_SLEEP
-#  define SIGNAL_SLEEP 250
-# endif
 
 # define SIGSEND_ERR 1
 # define SIGSEND_ERRSTR "\e[0;31mError\e[1;30m: \e[0;31mFailed\
