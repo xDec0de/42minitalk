@@ -6,13 +6,13 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 18:17:59 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:14:02 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-static char	*handle_size(int signum)
+static char	*handle_size(int signum, int pid)
 {
 	static t_ulong	size = 0;
 	static int		bit_count = 0;
@@ -22,7 +22,10 @@ static char	*handle_size(int signum)
 		size = size | (1 << (ULONG_BIT - bit_count - 1));
 	bit_count++;
 	if (bit_count != ULONG_BIT)
+	{
+		send_signal(pid, SIGUSR1);
 		return (NULL);
+	}
 	buff = malloc(size * sizeof(char));
 	if (buff == NULL)
 		stop_server(MALLOC_ERR);
@@ -32,6 +35,7 @@ static char	*handle_size(int signum)
 		size--;
 		buff[size] = '\0';
 	}
+	send_signal(pid, SIGUSR1);
 	return (buff);
 }
 
@@ -59,7 +63,7 @@ static int	handle_char(int signum, int pid, char *buff)
 		}
 		ch = '\0';
 	}
-	kill(pid, SIGUSR1);
+	send_signal(pid, SIGUSR1);
 	return (0);
 }
 
@@ -74,7 +78,7 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 	if (check_pid(pid, info->si_pid) == 1)
 		return ;
 	if (buff == NULL)
-		buff = handle_size(signum);
+		buff = handle_size(signum, pid);
 	else if (handle_char(signum, pid, buff) == 1)
 	{
 		free(buff);
