@@ -6,7 +6,7 @@
 #    By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/05 10:19:42 by daniema3          #+#    #+#              #
-#    Updated: 2025/02/22 16:48:36 by daniema3         ###   ########.fr        #
+#    Updated: 2025/02/22 18:56:22 by daniema3         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,10 @@ CFLAGS = -Wall -Werror -Wextra -g3 -DSIGNAL_SLEEP=$(SIGNAL_SLEEP)
 PRINTFC_FILES = printf/ft_printf.c printf/write_num.c printf/write_txt.c
 PRINTFO_FILES = $(PRINTFC_FILES:.c=.o)
 
-SC_FILES = server.c server_utils.c
+SC_FILES = shared_utils.c server.c server_utils.c
 SO_FILES = $(SC_FILES:.c=.o)
 
-CC_FILES = client.c client_utils.c
+CC_FILES = shared_utils.c client.c client_utils.c
 CO_FILES = $(CC_FILES:.c=.o)
 
 all: $(NAME)

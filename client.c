@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 18:12:43 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:08:32 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	check_input(int argc, char **args)
 	int	pid;
 
 	if (argc != 3)
-		client_stop(IN_ERR);
+		stop(IN_ERRSTR, IN_ERR);
 	pid = ft_atoi(args[1]);
 	if (pid <= 0)
-		client_stop(PID_ERR);
+		stop(PID_ERRSTR, PID_ERR);
 	return (pid);
 }
 
@@ -43,14 +43,7 @@ static void send_next_bit(int pid, char *buff)
 		i++;
 		last_bit = CHAR_BIT - 1;
 	}
-	ft_printf("Sending bit %d, index %d to %d\n", last_bit, i, pid);
-	if (msg[i] >> last_bit & 1)
-	{
-		if (kill(pid, SIGUSR1) != 0)
-			client_stop(SIG_SEND_ERR);
-	}
-	else if (kill(pid, SIGUSR2) != 0)
-		client_stop(SIG_SEND_ERR);
+	send_bit(pid, msg[i] >> last_bit & 1);
 	last_bit--;
 }
 
@@ -63,15 +56,9 @@ void	send_size(int pid, char *msg)
 	bit = ULONG_BIT - 1;
 	while (bit >= 0)
 	{
-		if (size >> bit & 1)
-		{
-			if (kill(pid, SIGUSR1) != 0)
-				client_stop(SIG_SEND_ERR);
-		}
-		else if (kill(pid, SIGUSR2) != 0)
-			client_stop(SIG_SEND_ERR);
-		bit--;
+		send_bit(pid, size >> bit & 1);
 		usleep(SIGNAL_SLEEP);
+		bit--;
 	}
 	send_next_bit(pid, msg);
 }
@@ -82,10 +69,7 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 	if (signum == SIGUSR1)
 		send_next_bit(info->si_pid, NULL);
 	else
-	{
-		ft_printf(SRV_BUSY);
-		exit(0);
-	}
+		stop(SRV_BUSY_ERRSTR, SRV_BUSY_ERR);
 }
 
 // ./client [int:PID] [char*:message]
