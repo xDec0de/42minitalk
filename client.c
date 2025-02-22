@@ -6,12 +6,11 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/19 16:13:03 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:12:43 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
-#include <stdio.h>
 
 int	check_input(int argc, char **args)
 {
@@ -25,31 +24,42 @@ int	check_input(int argc, char **args)
 	return (pid);
 }
 
-int	send_char(char ch, int pid)
+static void send_next_bit(int pid, char *buff)
 {
-	int	bit;
+	static int	srv_pid = 0;
+	static int	last_bit = CHAR_BIT - 1;
+	static int	i = 0;
+	static char	*msg = NULL;
 
-	bit = CHAR_BIT - 1;
-	while (bit >= 0)
+	if (srv_pid == 0)
 	{
-		if (ch >> bit & 1)
-		{
-			if (kill(pid, SIGUSR1) != 0)
-				client_stop(SIG_SEND_ERR);
-		}
-		else if (kill(pid, SIGUSR2) != 0)
-			client_stop(SIG_SEND_ERR);
-		bit--;
-		usleep(SIGNAL_SLEEP);
+		srv_pid = pid;
+		msg = buff;
 	}
-	return (1);
+	if (pid != srv_pid)
+		return ;
+	if (last_bit < 0)
+	{
+		i++;
+		last_bit = CHAR_BIT - 1;
+	}
+	ft_printf("Sending bit %d, index %d to %d\n", last_bit, i, pid);
+	if (msg[i] >> last_bit & 1)
+	{
+		if (kill(pid, SIGUSR1) != 0)
+			client_stop(SIG_SEND_ERR);
+	}
+	else if (kill(pid, SIGUSR2) != 0)
+		client_stop(SIG_SEND_ERR);
+	last_bit--;
 }
 
-void	send_size(t_ulong size, int pid)
+void	send_size(int pid, char *msg)
 {
-	int	bit;
+	int		bit;
+	t_ulong	size;
 
-	printf("Sending size %lld to server\n", size);
+	size = ft_strlen(msg);
 	bit = ULONG_BIT - 1;
 	while (bit >= 0)
 	{
@@ -63,32 +73,34 @@ void	send_size(t_ulong size, int pid)
 		bit--;
 		usleep(SIGNAL_SLEEP);
 	}
+	send_next_bit(pid, msg);
 }
 
-static void	signal_handler(int signum)
+static void	signal_handler(int signum, siginfo_t *info, void *context)
 {
+	(void) context;
 	if (signum == SIGUSR1)
-		ft_printf(SRV_STR_RECEIVED);
+		send_next_bit(info->si_pid, NULL);
 	else
+	{
 		ft_printf(SRV_BUSY);
-	exit (0);
+		exit(0);
+	}
 }
 
 // ./client [int:PID] [char*:message]
 int	main(int argc, char **args)
 {
-	int		pid;
-	int		i;
-	char	*text;
+	int					pid;
+	struct sigaction	sa;
 
-	i = 0;
-	signal(SIGUSR1, signal_handler);
-	signal(SIGUSR2, signal_handler);
 	pid = check_input(argc, args);
-	text = args[2];
-	send_size(ft_strlen(text), pid);
-	while (text[i] != '\0')
-		i += send_char(text[i], pid);
-	send_char('\0', pid);
+	sa.sa_flags = SA_SIGINFO;
+	sa.sa_sigaction = signal_handler;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+	send_size(pid, args[2]);
+	while (1)
+		;
 	return (0);
 }

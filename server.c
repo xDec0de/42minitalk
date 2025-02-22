@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 17:01:06 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 18:17:59 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	handle_char(int signum, int pid, char *buff)
 	if (bit_count == CHAR_BIT)
 	{
 		buff[i] = ch;
-		ft_printf("Handled char %c. i = %d, buff = %s\n", ch, i, buff);
+		//ft_printf("Handled char %c. i = %d, buff = %s\n", ch, i, buff);
 		i++;
 		bit_count = 0;
 		if (ch == '\0')
@@ -55,12 +55,12 @@ static int	handle_char(int signum, int pid, char *buff)
 			ft_printf("Received: %s\n", buff);
 			i = 0;
 			ch = '\0';
-			kill(pid, SIGUSR1);
-			return (0);
+			return (1);
 		}
 		ch = '\0';
 	}
-	return (1);
+	kill(pid, SIGUSR1);
+	return (0);
 }
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
@@ -75,7 +75,7 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 		return ;
 	if (buff == NULL)
 		buff = handle_size(signum);
-	else if (handle_char(signum, pid, buff) == 0)
+	else if (handle_char(signum, pid, buff) == 1)
 	{
 		free(buff);
 		buff = NULL;
