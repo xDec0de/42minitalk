@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 21:27:39 by danimart          #+#    #+#             */
-/*   Updated: 2025/02/22 20:32:06 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:53:23 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ void	send_bit(int pid, int bit)
 		send_signal(pid, SIGUSR2);
 }
 
-char *get_msg(char *init)
+t_client	get_client(t_client *init)
 {
-	static char *msg;
+	static t_client client;
 
 	if (init != NULL)
-		msg = init;
-	return (msg);
+		client = *init;
+	return (client);
 }
 
 int	check_input(int argc, char **args)

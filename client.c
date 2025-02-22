@@ -6,62 +6,56 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 20:35:18 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 21:01:46 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
 
-static void send_char_bit(int pid)
+static void send_char_bit(void)
 {
-	static int	srv_pid = 0;
 	static int	last_bit = CHAR_BIT - 1;
 	static int	i = 0;
+	t_client	client;
 
-	if (srv_pid == 0)
-		srv_pid = pid;
-	if (pid != srv_pid)
-		return ;
+	client = get_client(NULL);
 	if (last_bit < 0)
 	{
 		i++;
 		last_bit = CHAR_BIT - 1;
 	}
-	send_bit(pid, get_msg(NULL)[i] >> last_bit & 1);
-	if (last_bit == 0 && get_msg(NULL)[i] == '\0')
+	send_bit(client.srv_pid, client.msg[i] >> last_bit & 1);
+	if (last_bit == 0 && client.msg[i] == '\0')
 		stop(MSG_SENT, 0);
 	last_bit--;
 }
 
-int	send_size_bit(int pid)
+int	send_size_bit(void)
 {
-	static int		srv_pid = 0;
 	static int		last_bit = ULONG_BIT - 1;
-	static t_ulong	size = 0;
+	t_client		client;
 
-	if (srv_pid == 0)
-	{
-		srv_pid = pid;
-		size = ft_strlen(get_msg(NULL));
-	}
-	if (pid != srv_pid)
-		return (0);
-	send_bit(pid, size >> last_bit & 1);
+	client = get_client(NULL);
+	send_bit(client.srv_pid, client.msg_len >> last_bit & 1);
 	last_bit--;
 	return (last_bit == -1);
 }
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
 {
-	static int size_sent = 0;
-	
+	static int	size_sent = 0;
+	t_client	client;
+
+	client = get_client(NULL);
+	if (client.srv_pid != info->si_pid)
+		return ;
 	(void) context;
 	if (signum == SIGUSR1)
 	{
 		if (!size_sent)
-			size_sent = send_size_bit(info->si_pid);
+			size_sent = send_size_bit();
 		else
-			send_char_bit(info->si_pid);
+			send_char_bit();
 	}
 	else
 		stop(SRV_BUSY_ERRSTR, SRV_BUSY_ERR);
@@ -70,16 +64,18 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 // ./client [int:PID] [char*:message]
 int	main(int argc, char **args)
 {
-	int					pid;
+	t_client			client;
 	struct sigaction	sa;
 
-	pid = check_input(argc, args);
-	get_msg(args[2]);
+	client.srv_pid = check_input(argc, args);
+	client.msg = args[2];
+	client.msg_len = ft_strlen(client.msg);
+	get_client(&client);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = signal_handler;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	send_size_bit(pid);
+	send_size_bit();
 	while (1)
 		;
 	return (0);
