@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 19:08:32 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:39:26 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void send_next_bit(int pid, char *buff)
 		last_bit = CHAR_BIT - 1;
 	}
 	send_bit(pid, msg[i] >> last_bit & 1);
+	if (last_bit == 0 && msg[i] == '\0')
+		stop(MSG_SENT, 0);
 	last_bit--;
 }
 

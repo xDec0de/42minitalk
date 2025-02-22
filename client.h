@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:16:49 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 19:06:06 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 19:41:12 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define SRV_BUSY_ERRSTR "\e[1;30m[\e[1;33mServer\e[1;30m] \e[0;31mAnother\
  client is using the server, please wait\e[1;30m.\e[0m\n"
 
-# define SRV_STR_RECEIVED "\e[1;30m[\e[1;33mServer\e[1;30m] \e[0;36m\
+# define MSG_SENT "\e[1;30m[\e[1;33mServer\e[1;30m] \e[0;36m\
 String received and printed\e[1;30m.\e[0m\n"
 
 int		client_stop(int ext_code);
