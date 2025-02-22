@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/19 20:06:19 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/22 17:01:06 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*handle_size(int signum)
 	return (buff);
 }
 
-static int handle_char(int signum, int pid, char *buff)
+static int	handle_char(int signum, int pid, char *buff)
 {
 	static int	i = 0;
 	static int	bit_count = 0;
@@ -65,8 +65,8 @@ static int handle_char(int signum, int pid, char *buff)
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
 {
-	static int		pid = 0;
-	static char *buff = NULL;
+	static int	pid = 0;
+	static char	*buff = NULL;
 
 	(void) context;
 	if (pid == 0)
