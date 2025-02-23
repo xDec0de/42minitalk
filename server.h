@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:45:19 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/19 18:29:38 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/23 20:36:50 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 # include "minitalk.h"
 
+typedef struct s_server {
+	int		client_pid;
+	char	*msg;
+}				t_server;
+
 # define PID_NOTIFY "\e[0;36mServer started with PID\e[1;30m:\
  \e[1;33m%d\e[0m\n"
 
@@ -22,8 +27,12 @@
 # define MALLOC_ERR_STR "\e[0;31mError\e[1;30m: \e[0;31mMalloc failed,\
  stopping server\e[1;30m.\e[0m\n"
 
-void	stop_server(int exit_code);
+t_server	*get_server(t_server *init);
 
-int		check_pid(int pid, int incoming_pid);
+void		stop_server(int exit_code);
+
+void		reset_client_info(t_server *server);
+
+int			check_pid(int incoming_pid);
 
 #endif

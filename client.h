@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:16:49 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 20:53:34 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:35:57 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define CLIENT_H
 
 # include "minitalk.h"
+
+typedef struct s_client {
+	char*	msg;
+	int		msg_len;
+	int		srv_pid;
+}				t_client;
 
 # define IN_ERR 100
 # define IN_ERRSTR "\e[0;31mError\e[1;30m: \e[0;31mInvalid\
@@ -29,12 +35,6 @@
 
 # define MSG_SENT "\e[1;30m[\e[1;33mServer\e[1;30m] \e[0;36m\
 String received and printed\e[1;30m.\e[0m\n"
-
-typedef struct s_client {
-	char*	msg;
-	int		msg_len;
-	int		srv_pid;
-}				t_client;
 
 int			ft_atoi(const char *str);
 
