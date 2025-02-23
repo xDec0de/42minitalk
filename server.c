@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/23 20:51:05 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/23 20:54:34 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,12 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 
 int	main(void)
 {
-	struct sigaction	sa;
-	t_server			server;
+	t_server	server;
 
 	server.client_pid = 0;
 	server.msg = NULL;
 	get_server(&server);
-	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = signal_handler;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	init_sighandler(signal_handler);
 	ft_printf(PID_NOTIFY, getpid());
 	while (1)
 		;

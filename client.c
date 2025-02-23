@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 21:01:46 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/23 20:55:29 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,13 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 // ./client [int:PID] [char*:message]
 int	main(int argc, char **args)
 {
-	t_client			client;
-	struct sigaction	sa;
+	t_client	client;
 
 	client.srv_pid = check_input(argc, args);
 	client.msg = args[2];
 	client.msg_len = ft_strlen(client.msg);
 	get_client(&client);
-	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = signal_handler;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	init_sighandler(signal_handler);
 	send_size_bit();
 	while (1)
 		;

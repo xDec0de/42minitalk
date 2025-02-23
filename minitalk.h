@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 13:04:32 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/22 20:36:38 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/23 20:58:29 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ typedef unsigned long long	t_ulong;
 void	stop(char *err_msg, int exit_code);
 
 void	send_signal(int pid, int signum);
+
+void	init_sighandler(void (*handler)(int, siginfo_t*, void*));
 
 #endif
