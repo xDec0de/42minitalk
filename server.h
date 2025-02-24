@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:45:19 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/23 20:36:50 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:03:53 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "minitalk.h"
 
-typedef struct s_server {
+typedef struct s_server
+{
 	int		client_pid;
 	char	*msg;
 }				t_server;

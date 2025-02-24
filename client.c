@@ -6,13 +6,13 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 14:19:03 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:01:39 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "client.h"
 
-static void send_char_bit(t_client *client)
+static void	send_char_bit(t_client *client)
 {
 	static int	i = -1;
 

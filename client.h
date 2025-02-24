@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:16:49 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 14:18:44 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:02:18 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include "minitalk.h"
 
-typedef struct s_client {
-	char*	msg;
+typedef struct s_client
+{
+	char	*msg;
 	int		msg_len;
 	int		srv_pid;
 	int		last_bit;
@@ -45,6 +46,6 @@ void		send_bit(int pid, int bit);
 
 t_client	*get_client(t_client *init);
 
-int	check_input(int argc, char **args);
+int			check_input(int argc, char **args);
 
 #endif

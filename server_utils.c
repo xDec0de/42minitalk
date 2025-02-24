@@ -6,13 +6,13 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:59:34 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/23 20:37:47 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:04:37 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
 
-t_server *get_server(t_server *init)
+t_server	*get_server(t_server *init)
 {
 	static t_server	*server;
 
