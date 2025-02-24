@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 15:58:28 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:59:46 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 			kill(server->client_pid, SIGUSR2);
 		reset_client_info(server);
 		usleep(10000);
+		free(server);
 		exit(0);
 	}
 	if (!check_pid(info->si_pid))
@@ -90,11 +91,14 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 
 int	main(void)
 {
-	t_server	server;
+	t_server	*server;
 
-	server.client_pid = 0;
-	server.msg = NULL;
-	get_server(&server);
+	server = malloc(sizeof(t_server));
+	if (server == NULL)
+		stop_server(MALLOC_ERR);
+	server->client_pid = 0;
+	server->msg = NULL;
+	get_server(server);
 	init_sighandler(signal_handler);
 	ft_printf(PID_NOTIFY, getpid());
 	while (1)

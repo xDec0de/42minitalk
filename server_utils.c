@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 12:59:34 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 16:04:37 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:51:21 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ void	stop_server(int exit_code)
 	t_server	*server;
 
 	server = get_server(NULL);
+	if (server == NULL)
+		return ;
 	if (exit_code == MALLOC_ERR)
 		ft_printf(MALLOC_ERR_STR);
 	if (server->msg != NULL)
 		free(server->msg);
+	free(server);
 	exit(exit_code);
 }
 
