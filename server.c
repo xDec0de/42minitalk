@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 14:25:32 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:58:28 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static char	*handle_size(int signum, t_server *server)
 		send_signal(server->client_pid, SIGUSR1);
 		return (NULL);
 	}
+	bit_count = 0;
 	server->msg = malloc(size * sizeof(char));
 	if (server->msg == NULL)
 		stop_server(MALLOC_ERR);
@@ -50,12 +51,11 @@ static int	handle_char(int signum, t_server *server)
 	if (bit_count == CHAR_BIT)
 	{
 		server->msg[i] = ch;
-		//ft_printf("Handled char %c. i = %d, buff = %s\n", ch, i, buff);
 		i++;
 		bit_count = 0;
 		if (ch == '\0')
 		{
-			ft_printf("Received: %s\n", server->msg);
+			ft_printf("%s", server->msg);
 			i = 0;
 			ch = '\0';
 			return (1);
@@ -70,8 +70,8 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 {
 	static t_server	*server;
 
-	server = get_server(NULL);
 	(void) context;
+	server = get_server(NULL);
 	if (signum == SIGINT)
 	{
 		if (server->client_pid != 0)
