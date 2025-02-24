@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 18:23:51 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 14:20:22 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:58:45 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,14 @@ void	init_sighandler(void (*handler)(int, siginfo_t*, void*))
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	sigaction(SIGINT, &sa, NULL);
+}
+
+t_ulong	ft_strlen(char *str)
+{
+	t_ulong	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }

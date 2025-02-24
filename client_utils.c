@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 21:27:39 by danimart          #+#    #+#             */
-/*   Updated: 2025/02/24 16:02:35 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:02:21 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,6 @@ int	ft_atoi(const char *str)
 	if (sign)
 		return (-res);
 	return (res);
-}
-
-t_ulong	ft_strlen(char *str)
-{
-	t_ulong	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
 }
 
 void	send_bit(int pid, int bit)

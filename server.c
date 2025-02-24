@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 17:59:46 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:19:04 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static char	*handle_size(int signum, t_server *server)
 		return (NULL);
 	}
 	bit_count = 0;
+	server->msg_size = size;
 	server->msg = malloc(size * sizeof(char));
 	if (server->msg == NULL)
 		stop_server(MALLOC_ERR);
@@ -37,6 +38,20 @@ static char	*handle_size(int signum, t_server *server)
 	}
 	send_signal(server->client_pid, SIGUSR1);
 	return (server->msg);
+}
+
+void	verify_msg(t_server *server)
+{
+	t_ulong	len;
+
+	len = ft_strlen(server->msg);
+	if (len == server->msg_size)
+	{
+		ft_printf("%s", server->msg);
+		return ;
+	}
+	ft_printf("Incomplete message received from client\n");
+	kill(server->client_pid, SIGUSR2);
 }
 
 static int	handle_char(int signum, t_server *server)
@@ -55,9 +70,8 @@ static int	handle_char(int signum, t_server *server)
 		bit_count = 0;
 		if (ch == '\0')
 		{
-			ft_printf("%s", server->msg);
 			i = 0;
-			ch = '\0';
+			verify_msg(server);
 			return (1);
 		}
 		ch = '\0';
@@ -98,6 +112,7 @@ int	main(void)
 		stop_server(MALLOC_ERR);
 	server->client_pid = 0;
 	server->msg = NULL;
+	server->msg_size = 0;
 	get_server(server);
 	init_sighandler(signal_handler);
 	ft_printf(PID_NOTIFY, getpid());

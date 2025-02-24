@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 21:45:19 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 16:03:53 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:58:14 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_server
 {
 	int		client_pid;
 	char	*msg;
+	t_ulong	msg_size;
 }				t_server;
 
 # define PID_NOTIFY "\e[0;36mServer started with PID\e[1;30m:\
