@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:16:49 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/23 15:35:57 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:39:48 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_ulong		ft_strlen(char *str);
 
 void		send_bit(int pid, int bit);
 
-t_client	get_client(t_client *init);
+t_client	*get_client(t_client *init);
 
 int	check_input(int argc, char **args);
 
