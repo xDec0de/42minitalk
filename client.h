@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 20:16:49 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 13:39:48 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:57:30 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_client {
 	char*	msg;
 	int		msg_len;
 	int		srv_pid;
+	int		last_bit;
 }				t_client;
 
 # define IN_ERR 100

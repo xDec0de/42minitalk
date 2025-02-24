@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 13:42:46 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:16:02 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,26 @@
 
 static void send_char_bit(t_client *client)
 {
-	static int	last_bit = CHAR_BIT - 1;
-	static int	i = 0;
+	static int	i = -1;
 
-	if (last_bit < 0)
+	if (client->last_bit < 0)
 	{
 		i++;
-		last_bit = CHAR_BIT - 1;
+		client->last_bit = CHAR_BIT - 1;
 	}
-	send_bit(client->srv_pid, client->msg[i] >> last_bit & 1);
-	if (last_bit == 0 && client->msg[i] == '\0')
+	send_bit(client->srv_pid, client->msg[i] >> client->last_bit & 1);
+	if (client->last_bit == 0 && client->msg[i] == '\0')
 		stop(MSG_SENT, 0);
-	last_bit--;
+	client->last_bit--;
 }
 
 int	send_size_bit(t_client *client)
 {
-	static int		last_bit = ULONG_BIT - 1;
-
-	send_bit(client->srv_pid, client->msg_len >> last_bit & 1);
-	last_bit--;
-	return (last_bit == -1);
+	if (client->last_bit < 0)
+		client->last_bit = ULONG_BIT - 1;
+	send_bit(client->srv_pid, client->msg_len >> client->last_bit & 1);
+	client->last_bit--;
+	return (client->last_bit == -1);
 }
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
@@ -65,6 +64,7 @@ int	main(int argc, char **args)
 	client.srv_pid = check_input(argc, args);
 	client.msg = args[2];
 	client.msg_len = ft_strlen(client.msg);
+	client.last_bit = -1;
 	get_client(&client);
 	init_sighandler(signal_handler);
 	send_size_bit(&client);
