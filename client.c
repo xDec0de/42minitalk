@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 14:16:02 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:19:03 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 			send_char_bit(client);
 	}
 	else
-		stop(SRV_BUSY_ERRSTR, SRV_BUSY_ERR);
+		stop(SRV_CANCEL_ERRSTR, SRV_CANCEL_ERR);
 }
 
 // ./client [int:PID] [char*:message]
