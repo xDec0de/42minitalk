@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/25 17:49:21 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:17:11 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*handle_size(int signum, t_server *server)
 	}
 	bit_count = 0;
 	server->msg_size = size;
-	server->msg = malloc(size * sizeof(char));
+	server->msg = malloc((size + 1) * sizeof(char));
 	if (server->msg == NULL)
 		stop_server(MALLOC_ERR);
 	server->msg[size] = '\0';
