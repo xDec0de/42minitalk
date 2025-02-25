@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:54:44 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 19:02:34 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:22:33 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	handle_stop(t_client *client, int signum)
 {
 	if (signum == SIGUSR2)
 		stop(USER_INTERRUPT_ERRSTR, USER_INTERRUPT_ERR);
-	kill(client->srv_pid, SIGUSR2);
+	else
+		kill(client->srv_pid, SIGUSR2);
 }
 
 static void	signal_handler(int signum, siginfo_t *info, void *context)
@@ -60,7 +61,7 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 		return ;
 	if (stopping)
 		handle_stop(client, signum);
-	if (signum == SIGUSR1)
+	else if (signum == SIGUSR1)
 	{
 		if (!size_sent)
 			size_sent = send_size_bit(client);

@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/24 19:19:04 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:27:09 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	verify_msg(t_server *server)
 		ft_printf("%s", server->msg);
 		return ;
 	}
-	ft_printf("Incomplete message received from client\n");
 	kill(server->client_pid, SIGUSR2);
 }
 
