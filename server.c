@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 12:52:59 by daniema3          #+#    #+#             */
-/*   Updated: 2025/02/25 17:27:09 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:49:21 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ static void	signal_handler(int signum, siginfo_t *info, void *context)
 			kill(server->client_pid, SIGUSR2);
 		reset_client_info(server);
 		usleep(10000);
-		free(server);
-		exit(0);
+		stop_server(0);
 	}
 	if (!check_pid(info->si_pid))
 		return ;

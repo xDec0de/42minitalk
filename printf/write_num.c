@@ -6,7 +6,7 @@
 /*   By: daniema3 <daniema3@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:25:32 by daniema3          #+#    #+#             */
-/*   Updated: 2024/10/01 16:25:33 by daniema3         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:54:47 by daniema3         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char	*ft_ultoa(unsigned long nb)
 		digits++;
 	}
 	res = malloc((digits + 1) * sizeof(char));
-	if (!res)
+	if (res == NULL)
 		return (NULL);
 	res[digits] = '\0';
 	digits--;
@@ -55,6 +55,8 @@ int	write_num(int nb)
 		nb = nb * -1;
 	}
 	num = ft_ultoa(nb);
+	if (num == NULL)
+		return (write_str("MALLOC ERROR"));
 	res += write_str(num);
 	free(num);
 	return (res);
@@ -66,6 +68,8 @@ int	write_unum(unsigned int nb)
 	char	*num;
 
 	num = ft_ultoa(nb);
+	if (num == NULL)
+		return (write_str("MALLOC ERROR"));
 	res = write_str(num);
 	free(num);
 	return (res);
